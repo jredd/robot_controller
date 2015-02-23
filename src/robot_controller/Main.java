@@ -7,13 +7,19 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Main extends Application {
+    Scene scene;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primary_stage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("robot_controller_ui.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
-        primaryStage.show();
+        primary_stage.setTitle("Robot Remote");
+        scene = new Scene(root, 700, 900);
+        primary_stage.setScene(scene);
+
+        String css = Main.class.getResource("styles/main.css").toExternalForm();
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add(css);
+        primary_stage.show();
     }
 
 
