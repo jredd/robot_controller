@@ -15,6 +15,7 @@ public class Main extends Application {
         primary_stage.setTitle("Robot Remote");
         scene = new Scene(root, 700, 900);
         primary_stage.setScene(scene);
+        primary_stage.setResizable(false);
 
         String css = Main.class.getResource("styles/main.css").toExternalForm();
         scene.getStylesheets().clear();
