@@ -1,7 +1,136 @@
+@font-face {
+    font-family: 'League Gothic';
+    src: url('../fonts/league_gothic.ttf');
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: url('../fonts/open_sans.ttf');
+}
+
 .background_charcoal {
     -fx-background-color: #333;
 }
 
 .background_white {
     -fx-background-color: #fff;
+}
+
+.label {
+    -fx-font-size: 1.25em;
+    -fx-text-alignment: center;
+
+}
+
+.speed_vbox {
+    -fx-width: 50px;
+}
+
+.thumb {
+   -fx-background-radius: 0;
+   -fx-background-color: #333;
+   -fx-padding: 5 20 5 20;
+}
+
+.vbox_display {
+    -fx-border-width: 5 0 2 0;
+    -fx-border-color: #333;
+}
+
+.button, .toggle-button {
+    -fx-padding: 5 12 5 12;
+    -fx-border-color: #333;
+    -fx-border-width: 1;
+    -fx-background-radius: 0;
+    -fx-background-color: #333;
+    -fx-text-fill: #fff;
+    -fx-font-family: "Open Sans";
+    -fx-font-size: 1.25em;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+    -fx-width: auto;
+}
+
+.button:hover, .toggle-button:hover {
+    -fx-cursor: hand;
+}
+
+.button:pressed, .button:default:hover:pressed, .toggle-button:pressed, .toggle-button:hover:pressed {
+  -fx-border-color: #333;
+  -fx-background-color: #fff;
+  -fx-text-fill: #333;
+}
+
+.button:focused, .toggle-button:focused, .button:focused:hover {
+    -fx-border-color: #333;
+    -fx-border-style: solid, segments(1, 1);
+    -fx-border-insets: 0;
+}
+
+.toggle-button:selected {
+    -fx-text-fill: #333;
+    -fx-border-color: #333;
+    -fx-background-color: #fff;
+}
+
+
+
+.button:disabled, .button:default:disabled, .toggle-button:disabled, .toggle-button:default:disabled {
+    -fx-opacity: 0.4;
+    -fx-background-color: #1d1d1d;
+    -fx-text-fill: white;
+}
+
+.button:default, .toggle-button:default {
+    -fx-background-color: -fx-focus-color;
+    -fx-text-fill: #ffffff;
+}
+
+.button:default:hover, .toggle-button:default:hover {
+    -fx-background-color: derive(-fx-focus-color,30%);
+    -fx-border-color: #333;
+}
+
+.button-left {
+    -fx-background-image:url("../images/arrow_left.png");
+}
+
+.button-left:pressed {
+    -fx-background-image:url("../images/arrow_left_pressed.png");
+}
+
+.button-right {
+    -fx-background-image:url("../images/arrow_right.png");
+}
+.button-right:pressed {
+    -fx-background-image:url("../images/arrow_right_pressed.png");
+}
+
+.button-arrow {
+    -fx-padding: 62 38 62 38;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 75;
+    -fx-border-color: transparent;
+}
+
+.button-arrow:hover {
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+}
+
+.button-arrow:pressed {
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+.button-arrow:default:hover{
+    -fx-cursor: hand;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.button-arrow:focused, .button-arrow:focused:hover {
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
 }
