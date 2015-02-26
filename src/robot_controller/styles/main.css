@@ -8,6 +8,10 @@
     src: url('../fonts/open_sans.ttf');
 }
 
+#video_label {
+    -fx-font-size: 4em;
+}
+
 .background_charcoal {
     -fx-background-color: #333;
 }

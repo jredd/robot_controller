@@ -1,30 +1,38 @@
 package robot_controller;
 
+import javafx.animation.Animation;
 import javafx.animation.FadeTransition;
-import javafx.beans.value.ObservableValue;
+import javafx.scene.control.Label;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Line;
 import javafx.scene.control.Slider;
-import javafx.scene.input.KeyEvent;
-import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
-import javafx.animation.FadeTransition.*;
+import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
-
+import javafx.scene.control.Control;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
 
 
 public class Controller_fx implements Initializable {
 
     @FXML
     private Button btn_speed_slow;
+    @FXML
+    private Button btn_speed_medium;
+    @FXML
+    private Button btn_turn_left;
+    @FXML
+    private Button btn_turn_right;
+    @FXML
+    private Button btn_claw_open;
+    @FXML
+    private Button btn_claw_close;
     @FXML
     private Slider slider_arm;
     @FXML
@@ -41,103 +49,156 @@ public class Controller_fx implements Initializable {
     private Line line_claw_top;
     @FXML
     private Line line_claw_bottom;
+    @FXML
+    private Label label_video;
 
+    private int current_claw_angle=45;
     private boolean show_video = false;
-    private boolean reverse_velocity = true;
-    private boolean continue_turning = false;
-    private boolean continue_moving = false;
+    private boolean reverse_velocity = false;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("Initializing Application and setting things");
 
-        slider_arm.valueProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-                System.out.println("changed - "+(newValue));
-            }
-        });
+        // Set initial rotation angle of the claw hand
+        line_claw_top.getTransforms().add(new Rotate(current_claw_angle*-1));
+        line_claw_bottom.getTransforms().add(new Rotate(current_claw_angle));
     }
 
-    public void set_speed_slow(MouseEvent Event) {
-        System.out.println("Start moving - slow");
-        System.out.println(Event.isPrimaryButtonDown());
-        continue_moving = true;
-//        object img_pane = (ImageView) loader.load(indicator_forwards);
-        while (Event.isPrimaryButtonDown()) {
-            System.out.println("just working");
-            try {
-                TimeUnit.MICROSECONDS.sleep(3000);
-            } catch (InterruptedException e){
-                System.out.println(e);
+    public void move_forwards_or_backwards(MouseEvent Event) {
+        Object event_type = Event.getEventType();
+        String control_id = ((Control)Event.getSource()).getId();
+        int velocity;
+        if (control_id.equals("btn_speed_slow")) {
+            velocity = 700;
+        }else if (control_id.equals("btn_speed_medium")) {
+            velocity = 500;
+        }else if (control_id.equals("btn_speed_fast")) {
+            velocity = 300;
+        } else {
+            velocity = 200;
+        }
+
+        FadeTransition ft;
+        if (reverse_velocity) {
+            ft = new FadeTransition(Duration.millis(velocity), indicator_backwards);
+        } else {
+            ft = new FadeTransition(Duration.millis(velocity), indicator_forwards);
+        }
+
+        if (event_type == MouseEvent.MOUSE_PRESSED) {
+//            System.out.println("Mouse pressed - "+control_id);
+
+            if (reverse_velocity) {
+                indicator_backwards.setVisible(true);
+            } else {
+                indicator_forwards.setVisible(true);
             }
 
-//            indicator_forwards.setVisible(true);
-//            FadeTransition ft = new FadeTransition(Duration.millis(300), indicator_forwards);
-//            ft.setFromValue(0);
-//            ft.setToValue(1);
-//            ft.setAutoReverse(true);
-//            ft.play();
+            ft.setFromValue(0);
+            ft.setToValue(1);
+            ft.setCycleCount(Animation.INDEFINITE);
+            ft.setAutoReverse(true);
+            ft.play();
+        }else if (event_type == MouseEvent.MOUSE_RELEASED) {
+//            System.out.println("Mouse Released");
+
+            ft.stop();
+            if (reverse_velocity) {
+                indicator_backwards.setVisible(false);
+            } else {
+                indicator_forwards.setVisible(false);
+            }
         }
     }
 
-    public void set_speed_medium(MouseEvent Event) {
-        System.out.println("Start moving - medium");
-    }
+    public void turn_left_or_right(MouseEvent Event) {
+        Object event_type = Event.getEventType();
+        String control_id = ((Control)Event.getSource()).getId();
 
-    public void set_speed_fast(MouseEvent Event) {
-        System.out.println("Start moving - fast");
-    }
+        FadeTransition ft;
+        if (control_id.equals("btn_turn_left")) {
+            ft = new FadeTransition(Duration.millis(400), indicator_left);
+        } else {
+            ft = new FadeTransition(Duration.millis(400), indicator_right);
+        }
 
-    public void stop_vehicle(MouseEvent Event) {
-        System.out.println("Stopped moving");
+        if (event_type == MouseEvent.MOUSE_PRESSED) {
+            System.out.println("Mouse pressed - "+control_id);
 
-        continue_moving = false;
-    }
+            if (control_id.equals("btn_turn_left")) {
+                indicator_left.setVisible(true);
+            } else {
+                indicator_right.setVisible(true);
+            }
 
-    public void claw_open(MouseEvent Event) {
-        System.out.println("Claw Open");
-    }
+            ft.setFromValue(0);
+            ft.setToValue(1);
+            ft.setCycleCount(Animation.INDEFINITE);
+            ft.setAutoReverse(true);
+            ft.play();
+        }else if (event_type == MouseEvent.MOUSE_RELEASED) {
+            System.out.println("Mouse Released");
 
-    public void claw_close(MouseEvent Event) {
-        System.out.println("Claw Close");
-    }
-
-    public void claw_stop(MouseEvent Event) {
-        System.out.println("Claw stop");
-    }
-
-    public void turn_left(MouseEvent Event) {
-        System.out.println("Turn left");
-    }
-
-    public void turn_right(MouseEvent Event) {
-        System.out.println("Turn right");
-    }
-
-    public void turn_stop(MouseEvent Event) {
-        System.out.println("Turn stop");
+            ft.stop();
+            if (control_id.equals("btn_turn_left")) {
+                indicator_left.setVisible(false);
+            } else {
+                indicator_right.setVisible(false);
+            }
+        }
     }
 
     public void toggle_video(ActionEvent Event) {
         if (show_video) {
             System.out.println("stop video");
+            label_video.setVisible(true);
             show_video = false;
         } else {
             System.out.println("start video");
+            label_video.setVisible(false);
             show_video = true;
-
         }
     }
 
     public void toggle_reverse(ActionEvent Event) {
         if (reverse_velocity) {
-            System.out.println("going to move backwards");
+//            System.out.println("going to move forwards");
             reverse_velocity = false;
         } else {
-            System.out.println("going to move forwards");
+//            System.out.println("going to move backwards");
             reverse_velocity = true;
         }
     }
 
+    public void change_arm_angle(MouseEvent Event) {
+//        System.out.println(slider_arm.getValue());
+        Rotate rotate = new Rotate(slider_arm.getValue()*-1);
+        line_arm.getTransforms().clear();
+        line_arm.getTransforms().add(rotate);
+    }
+
+    public void claw_open_or_close(MouseEvent Event) {
+        String control_id = ((Control)Event.getSource()).getId();
+
+        if (control_id.equals("btn_claw_open")) {
+            if (current_claw_angle <= 75) {
+                btn_claw_close.setDisable(false);
+                line_claw_top.getTransforms().add(new Rotate(-1));
+                line_claw_bottom.getTransforms().add(new Rotate(1));
+                current_claw_angle+=1;
+            } else {
+                btn_claw_open.setDisable(true);
+            }
+        }else {
+            if (current_claw_angle > 0) {
+                btn_claw_open.setDisable(false);
+                line_claw_top.getTransforms().add(new Rotate(1));
+                line_claw_bottom.getTransforms().add(new Rotate(-1));
+                current_claw_angle-=1;
+            } else {
+                btn_claw_close.setDisable(true);
+            }
+        }
+    }
 }

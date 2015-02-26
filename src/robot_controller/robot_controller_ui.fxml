@@ -19,27 +19,16 @@
    <children>
       <VBox layoutX="15.0" layoutY="15.0" prefHeight="200.0" prefWidth="100.0" styleClass="background_white" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
          <children>
-            <VBox prefHeight="550.0" prefWidth="100.0" />
+            <VBox prefHeight="550.0" prefWidth="100.0">
+               <children>
+                  <Label fx:id="label_video" text="No Video Feed" translateX="285.0" translateY="200.0" />
+               </children></VBox>
             <VBox prefHeight="250.0" prefWidth="100.0">
                <children>
                   <VBox maxHeight="100.0" minHeight="150.0" prefHeight="100.0" prefWidth="560.0" styleClass="vbox_display">
                      <children>
                         <HBox prefWidth="200.0">
                            <children>
-                              <Pane prefWidth="175.0">
-                                 <children>
-                                    <ImageView fx:id="indicator_left" layoutX="11.0" layoutY="14.0" visible="false">
-                                       <image>
-                                          <Image url="@images/indicator_left.png" />
-                                       </image>
-                                    </ImageView>
-                                    <ImageView fx:id="indicator_right" layoutX="11.0" layoutY="14.0" visible="false">
-                                       <image>
-                                          <Image url="@images/indicator_right.png" />
-                                       </image>
-                                    </ImageView>
-                                 </children>
-                              </Pane>
                               <Pane prefHeight="200.0" prefWidth="115.0">
                                  <children>
                                     <ImageView fx:id="indicator_forwards" layoutX="11.0" layoutY="9.0" visible="false">
@@ -54,19 +43,36 @@
                                     </ImageView>
                                  </children>
                               </Pane>
+                              <Pane prefWidth="175.0">
+                                 <children>
+                                    <ImageView fx:id="indicator_left" layoutX="11.0" layoutY="14.0" visible="false">
+                                       <image>
+                                          <Image url="@images/indicator_left.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fx:id="indicator_right" layoutX="11.0" layoutY="14.0" visible="false">
+                                       <image>
+                                          <Image url="@images/indicator_right.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </Pane>
+                              <Region prefHeight="200.0" prefWidth="200.0" />
                               <Pane prefHeight="143.0" prefWidth="108.0">
                                  <children>
-                                    <Line fx:id="line_claw_top" endX="75.0" layoutX="15.0" layoutY="50.0" strokeWidth="3.0">
+                                    <Line fx:id="line_claw_top" endX="60.0" layoutX="10.0" layoutY="80.0" strokeWidth="3.0">
                                        <rotationAxis>
                                           <Point3D x="50.0" z="1.0" />
                                        </rotationAxis>
                                     </Line>
-                                    <Line fx:id="line_claw_bottom" endX="75.0" layoutX="25.0" layoutY="60.0" strokeWidth="3.0" />
+                                    <Line fx:id="line_claw_bottom" endX="60.0" layoutX="10.0" layoutY="80.0" strokeWidth="3.0" />
+                                    <Label layoutX="27.0" layoutY="3.0" text="Claw" />
                                  </children>
                               </Pane>
                               <Pane prefHeight="143.0" prefWidth="145.0">
                                  <children>
-                                    <Line fx:id="line_arm" endX="115.0" layoutX="15.0" layoutY="125.0" strokeWidth="3.0" />
+                                    <Line fx:id="line_arm" endX="115.0" layoutX="5.0" layoutY="125.0" strokeWidth="3.0" />
+                                    <Label layoutX="48.0" layoutY="4.0" text="Arm" />
                                  </children>
                               </Pane>
                            </children>
@@ -76,15 +82,15 @@
                      <children>
                         <VBox maxWidth="125.0" minWidth="125.0" prefHeight="200.0" prefWidth="100.0" styleClass="speed_vbox">
                            <children>
-                              <Button fx:id="btn_speed_slow" minWidth="95.0" mnemonicParsing="false" onMousePressed="#set_speed_slow" onMouseReleased="#stop_vehicle" text="Slow">
+                              <Button fx:id="btn_speed_slow" minWidth="95.0" mnemonicParsing="false" onMousePressed="#move_forwards_or_backwards" onMouseReleased="#move_forwards_or_backwards" text="Slow">
                                  <VBox.margin>
                                     <Insets bottom="1.0" top="1.0" />
                                  </VBox.margin></Button>
-                              <Button minWidth="95.0" mnemonicParsing="false" onMousePressed="#set_speed_medium" onMouseReleased="#stop_vehicle" text="Medium">
+                              <Button fx:id="btn_speed_medium" minWidth="95.0" mnemonicParsing="false" onMousePressed="#move_forwards_or_backwards" onMouseReleased="#move_forwards_or_backwards" text="Medium">
                                  <VBox.margin>
                                     <Insets bottom="1.0" top="1.0" />
                                  </VBox.margin></Button>
-                              <Button minWidth="95.0" mnemonicParsing="false" onMousePressed="#set_speed_fast" onMouseReleased="#stop_vehicle" text="Fast">
+                              <Button fx:id="btn_speed_fast" minWidth="95.0" mnemonicParsing="false" onMousePressed="#move_forwards_or_backwards" onMouseReleased="#move_forwards_or_backwards" text="Fast">
                                  <VBox.margin>
                                     <Insets bottom="1.0" top="1.0" />
                                  </VBox.margin></Button>
@@ -99,13 +105,13 @@
                         </VBox>
                         <VBox maxWidth="100.0" minWidth="100.0" prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Button minWidth="70.0" mnemonicParsing="false" onMousePressed="#claw_open" onMouseReleased="#claw_stop" text="Open" />
+                              <Button fx:id="btn_claw_open" minWidth="70.0" mnemonicParsing="false" onMousePressed="#claw_open_or_close" text="Open" />
                               <Label text="Claw">
                                  <VBox.margin>
                                     <Insets bottom="25.0" left="15.0" right="15.0" top="25.0" />
                                  </VBox.margin>
                               </Label>
-                              <Button minWidth="70.0" mnemonicParsing="false" onMouseReleased="#claw_close" onScroll="#claw_stop" text="Close" />
+                              <Button fx:id="btn_claw_close" minWidth="70.0" mnemonicParsing="false" onMousePressed="#claw_open_or_close" text="Close" />
                            </children>
                            <padding>
                               <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
@@ -124,7 +130,7 @@
                         <Region prefHeight="200.0" prefWidth="200.0" />
                         <VBox prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Slider fx:id="slider_arm" blockIncrement="5.0" max="90.0" orientation="VERTICAL" prefHeight="155.0" prefWidth="80.0">
+                              <Slider fx:id="slider_arm" blockIncrement="1.0" max="90.0" onMouseDragged="#change_arm_angle" orientation="VERTICAL" prefHeight="155.0" prefWidth="80.0">
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin>
@@ -144,13 +150,13 @@
                               <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                            </padding>
                            <children>
-                              <Button mnemonicParsing="false" onMousePressed="#turn_left" onMouseReleased="#turn_stop">
+                              <Button fx:id="btn_turn_left" mnemonicParsing="false" onMousePressed="#turn_left_or_right" onMouseReleased="#turn_left_or_right">
                                  <styleClass>
                                     <String fx:value="button-arrow" />
                                     <String fx:value="button-left" />
                                  </styleClass>
                               </Button>
-                              <Button mnemonicParsing="false" onMousePressed="#turn_right" onMouseReleased="#turn_stop">
+                              <Button fx:id="btn_turn_right" mnemonicParsing="false" onMousePressed="#turn_left_or_right" onMouseReleased="#turn_left_or_right">
                                  <styleClass>
                                     <String fx:value="button-arrow" />
                                     <String fx:value="button-right" />
