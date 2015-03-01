@@ -21,7 +21,22 @@
          <children>
             <VBox prefHeight="550.0" prefWidth="100.0">
                <children>
-                  <Label fx:id="label_video" text="No Video Feed" translateX="285.0" translateY="200.0" />
+                  <Pane prefHeight="535.0" prefWidth="660.0">
+                     <children>
+                        <Label fx:id="label_video" layoutX="275.0" layoutY="258.0" text="No Video Feed" />
+                        <Pane fx:id="pane_video_feed" prefHeight="535.0" prefWidth="660.0" visible="false">
+                           <children>
+                              <ImageView fx:id="image_view_video_feed" fitHeight="535.0" fitWidth="660.0">
+                                 <image>
+                                    <Image url="@images/hallway.jpg" />
+                                 </image>
+                              </ImageView>
+                              <Button fx:id="btn_make_video_larger" layoutX="9.0" layoutY="493.0" mnemonicParsing="false" onMousePressed="#change_video_size" text="+" />
+                              <Button fx:id="btn_make_video_smaller" disable="true" layoutX="47.0" layoutY="493.0" mnemonicParsing="false" onMousePressed="#change_video_size" text="-" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </Pane>
                </children></VBox>
             <VBox prefHeight="250.0" prefWidth="100.0">
                <children>
@@ -57,7 +72,13 @@
                                     </ImageView>
                                  </children>
                               </Pane>
-                              <Region prefHeight="200.0" prefWidth="200.0" />
+                              <Pane fx:id="pane_temperature" prefHeight="143.0" prefWidth="139.0" visible="false">
+                                 <children>
+                                    <Label layoutX="37.0" layoutY="13.0" text="Current" />
+                                    <Label fx:id="label_temperature" layoutX="39.0" layoutY="81.0" text="Label" />
+                                    <Label layoutX="20.0" layoutY="31.0" text="Temperature" />
+                                 </children>
+                              </Pane>
                               <Pane prefHeight="143.0" prefWidth="108.0">
                                  <children>
                                     <Line fx:id="line_claw_top" endX="60.0" layoutX="10.0" layoutY="80.0" strokeWidth="3.0">
@@ -118,13 +139,18 @@
                            </padding>
                         </VBox>
                         <Region prefHeight="200.0" prefWidth="200.0" />
-                        <VBox prefHeight="175.0" prefWidth="76.0">
+                        <VBox minWidth="-Infinity" prefHeight="175.0" prefWidth="111.0">
                            <children>
                               <ToggleButton minWidth="70.0" mnemonicParsing="false" onAction="#toggle_video" prefHeight="36.0" prefWidth="65.0" text="Video">
                                  <VBox.margin>
-                                    <Insets left="15.0" right="15.0" top="70.0" />
+                                    <Insets left="20.0" right="15.0" top="30.0" />
                                  </VBox.margin>
                               </ToggleButton>
+                              <Button mnemonicParsing="false" onMousePressed="#get_current_temperature" prefHeight="36.0" prefWidth="87.0" text="Get Temp">
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                                 </VBox.margin>
+                              </Button>
                            </children>
                         </VBox>
                         <Region prefHeight="200.0" prefWidth="200.0" />
@@ -146,22 +172,32 @@
                            </children>
                         </VBox>
                         <HBox maxWidth="200.0" minWidth="175.0" prefHeight="100.0" prefWidth="200.0">
-                           <padding>
-                              <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                           </padding>
                            <children>
-                              <Button fx:id="btn_turn_left" mnemonicParsing="false" onMousePressed="#turn_left_or_right" onMouseReleased="#turn_left_or_right">
-                                 <styleClass>
-                                    <String fx:value="button-arrow" />
-                                    <String fx:value="button-left" />
-                                 </styleClass>
-                              </Button>
-                              <Button fx:id="btn_turn_right" mnemonicParsing="false" onMousePressed="#turn_left_or_right" onMouseReleased="#turn_left_or_right">
-                                 <styleClass>
-                                    <String fx:value="button-arrow" />
-                                    <String fx:value="button-right" />
-                                 </styleClass>
-                              </Button>
+                              <VBox prefHeight="200.0" prefWidth="100.0">
+                                 <children>
+                                    <Label text="Turn">
+                                       <VBox.margin>
+                                          <Insets left="55.0" />
+                                       </VBox.margin>
+                                    </Label>
+                                    <HBox prefHeight="100.0" prefWidth="200.0">
+                                       <children>
+                                          <Button fx:id="btn_turn_left" mnemonicParsing="false" onMousePressed="#turn_left_or_right" onMouseReleased="#turn_left_or_right">
+                                             <styleClass>
+                                                <String fx:value="button-arrow" />
+                                                <String fx:value="button-left" />
+                                             </styleClass>
+                                          </Button>
+                                          <Button fx:id="btn_turn_right" mnemonicParsing="false" onMousePressed="#turn_left_or_right" onMouseReleased="#turn_left_or_right">
+                                             <styleClass>
+                                                <String fx:value="button-arrow" />
+                                                <String fx:value="button-right" />
+                                             </styleClass>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
                            </children>
                         </HBox>
                      </children>
