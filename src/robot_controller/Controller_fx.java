@@ -173,9 +173,9 @@ public class Controller_fx implements Initializable {
 
     public void change_arm_angle(MouseEvent Event) {
 //        System.out.println(slider_arm.getValue());
-        Rotate rotate = new Rotate(slider_arm.getValue()*-1);
+//        Rotate rotate = new Rotate(slider_arm.getValue()*-1);
         line_arm.getTransforms().clear();
-        line_arm.getTransforms().add(rotate);
+        line_arm.getTransforms().add(new Rotate(slider_arm.getValue()*-1));
     }
 
     public void claw_open_or_close(MouseEvent Event) {
